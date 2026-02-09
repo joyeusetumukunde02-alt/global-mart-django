@@ -1,0 +1,926 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Your Order | GlobalMart</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #2575fc;
+            --secondary-color: #6a11cb;
+            --accent-color: #ff8a00;
+            --light-bg: #ffffff;
+            --dark-text: #2d3748;
+            --shadow-lg: 0 25px 50px rgba(0, 0, 0, 0.25);
+            --shadow-md: 0 10px 20px rgba(0, 0, 0, 0.15);
+            --gradient-primary: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
+                        url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center/cover;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+            animation: backgroundZoom 20s infinite alternate ease-in-out;
+        }
+
+        @keyframes backgroundZoom {
+            0% {
+                background-size: 100% auto;
+            }
+            100% {
+                background-size: 120% auto;
+            }
+        }
+
+        /* Animated Background Elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(106, 17, 203, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(37, 117, 252, 0.15) 0%, transparent 50%);
+            z-index: 0;
+            animation: pulse 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.4; }
+            100% { opacity: 0.8; }
+        }
+
+        /* Floating Tech Elements */
+        .tech-element {
+            position: fixed;
+            z-index: 0;
+            opacity: 0.1;
+            filter: blur(1px);
+        }
+
+        .tech-element:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            width: 100px;
+            height: 100px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            animation: float1 25s infinite linear;
+        }
+
+        .tech-element:nth-child(2) {
+            top: 70%;
+            right: 10%;
+            width: 150px;
+            height: 150px;
+            border: 2px solid var(--secondary-color);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: float2 30s infinite linear;
+        }
+
+        .tech-element:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            width: 80px;
+            height: 80px;
+            border: 2px solid var(--accent-color);
+            border-radius: 20px;
+            transform: rotate(45deg);
+            animation: float3 20s infinite linear;
+        }
+
+        @keyframes float1 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100px, 100px) rotate(360deg); }
+        }
+
+        @keyframes float2 {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(-100px, -50px) rotate(-360deg); }
+        }
+
+        @keyframes float3 {
+            0% { transform: translate(0, 0) rotate(45deg); }
+            100% { transform: translate(80px, -80px) rotate(405deg); }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(20px);
+            width: 100%;
+            max-width: 480px;
+            padding: 40px 35px;
+            border-radius: 30px;
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            animation: containerFloat 8s ease-in-out infinite;
+        }
+
+        @keyframes containerFloat {
+            0%, 100% { transform: translateY(0) rotate(0.5deg); }
+            50% { transform: translateY(-10px) rotate(-0.5deg); }
+        }
+
+        /* Glow Effect */
+        .container::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--gradient-primary);
+            border-radius: 32px;
+            z-index: -1;
+            filter: blur(20px);
+            opacity: 0.3;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            0% { opacity: 0.3; }
+            100% { opacity: 0.6; }
+        }
+
+        /* Decorative Header Line */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-primary);
+            border-radius: 30px 30px 0 0;
+            animation: shimmer 3s linear infinite;
+            background-size: 200% 100%;
+            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .header i {
+            font-size: 3.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 15px rgba(37, 117, 252, 0.3));
+            animation: iconFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes iconFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            border-radius: 2px;
+            box-shadow: 0 4px 10px rgba(106, 17, 203, 0.3);
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-top: 20px;
+            font-weight: 500;
+            line-height: 1.6;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 12px 20px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Form Styling */
+        .form-container {
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) transparent;
+        }
+
+        .form-container::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .form-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+
+        /* Form Groups */
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+            animation: slideUp 0.5s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+        .form-group:nth-child(5) { animation-delay: 0.5s; }
+        .form-group:nth-child(6) { animation-delay: 0.6s; }
+        .form-group:nth-child(7) { animation-delay: 0.7s; }
+        .form-group:nth-child(8) { animation-delay: 0.8s; }
+
+        .form-group label {
+            display: block;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group label i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            width: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 16px 20px 16px 55px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--dark-text);
+            background: rgba(248, 250, 252, 0.8);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            appearance: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: white;
+            box-shadow: 
+                0 10px 25px rgba(37, 117, 252, 0.15),
+                0 0 0 3px rgba(37, 117, 252, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input:hover, select:hover {
+            border-color: #cbd5e0;
+            transform: translateY(-1px);
+        }
+
+        /* File Input Styling */
+        input[type="file"] {
+            padding: 16px 20px;
+            cursor: pointer;
+            background: white;
+        }
+
+        input[type="file"]::file-selector-button {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: 2px solid var(--primary-color);
+            background: white;
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-right: 15px;
+            box-shadow: 0 4px 8px rgba(37, 117, 252, 0.15);
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(37, 117, 252, 0.3);
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 10px 20px rgba(37, 117, 252, 0.3);
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+            z-index: -1;
+        }
+
+        .submit-btn:hover::before {
+            left: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                0 15px 30px rgba(37, 117, 252, 0.4),
+                0 0 0 3px rgba(255, 255, 255, 0.1);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 5px solid var(--primary-color);
+            box-shadow: 
+                0 8px 20px rgba(0, 0, 0, 0.05),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .order-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-primary);
+            animation: shimmer 3s linear infinite;
+            background-size: 200% 100%;
+        }
+
+        .order-summary h3 {
+            color: var(--dark-text);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.1rem;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #e2e8f0;
+            transition: all 0.3s ease;
+        }
+
+        .summary-item:hover {
+            padding-left: 5px;
+            border-color: var(--primary-color);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            padding: 10px 0;
+            border-top: 2px solid var(--primary-color);
+            margin-top: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                animation: backgroundZoomMobile 20s infinite alternate ease-in-out;
+            }
+
+            @keyframes backgroundZoomMobile {
+                0% {
+                    background-size: 150% auto;
+                }
+                100% {
+                    background-size: 180% auto;
+                }
+            }
+
+            .container {
+                padding: 30px 25px;
+                max-width: 95%;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .header i {
+                font-size: 2.8rem;
+            }
+
+            .subtitle {
+                font-size: 0.9rem;
+                padding: 10px 15px;
+            }
+
+            input, select {
+                padding: 14px 18px 14px 50px;
+            }
+
+            .submit-btn {
+                padding: 16px;
+                font-size: 16px;
+            }
+        }
+
+        /* Form Error Styling */
+        .error {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: shake 0.5s ease;
+            padding: 8px 12px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 8px;
+            border-left: 3px solid #ef4444;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        /* Success Message */
+        .success-message {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+            animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 
+                0 8px 25px rgba(16, 185, 129, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .success-message::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+            animation: successShimmer 2s linear infinite;
+        }
+
+        @keyframes successShimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Floating Tech Elements -->
+<div class="tech-element"></div>
+<div class="tech-element"></div>
+<div class="tech-element"></div>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <i class="fas fa-shopping-cart"></i>
+        <h1>Complete Your Order</h1>
+        <p class="subtitle">
+            <i class="fas fa-bolt" style="color: var(--accent-color);"></i>
+            Secure checkout • 24h Kigali Delivery • Premium Support
+        </p>
+    </div>
+
+    <!-- Success Message (Hidden by default) -->
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle fa-2x" style="margin-bottom: 10px;"></i>
+        <h3 style="margin-bottom: 5px; color: white;">Order Submitted Successfully!</h3>
+        <p>Thank you for your order. We'll contact you shortly for confirmation.</p>
+    </div>
+
+    <!-- Form Container -->
+    <div class="form-container">
+        <form method="POST" enctype="multipart/form-data" id="orderForm">
+            {% csrf_token %}
+
+            <!-- Order Summary (Dynamic from localStorage) -->
+            <div class="order-summary" id="orderSummary">
+                <h3><i class="fas fa-receipt"></i> Order Summary</h3>
+                <div class="summary-item">
+                    <span>Product:</span>
+                    <span id="summaryProduct">Loading...</span>
+                </div>
+                <div class="summary-item">
+                    <span>Price:</span>
+                    <span id="summaryPrice">Loading...</span>
+                </div>
+                <div class="summary-item">
+                    <span>Delivery:</span>
+                    <span id="summaryDelivery">Kigali - 24h</span>
+                </div>
+                <div class="summary-item">
+                    <span>Total Amount:</span>
+                    <span id="summaryTotal">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Your Name -->
+            <div class="form-group">
+                <label for="id_your_name"><i class="fas fa-user"></i> Full Name</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-user"></i>
+                    {{ form.your_name }}
+                </div>
+                {% if form.your_name.errors %}
+                <div class="error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ form.your_name.errors.0 }}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="id_email"><i class="fas fa-envelope"></i> Email Address</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    {{ form.email }}
+                </div>
+                {% if form.email.errors %}
+                <div class="error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ form.email.errors.0 }}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+                <label for="id_phone"><i class="fas fa-phone"></i> Phone Number</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-phone"></i>
+                    {{ form.phone }}
+                </div>
+                {% if form.phone.errors %}
+                <div class="error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ form.phone.errors.0 }}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Destination -->
+            <div class="form-group">
+                <label for="id_your_destination"><i class="fas fa-map-marker-alt"></i> Delivery Destination</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-map-marker-alt"></i>
+                    {{ form.your_destination }}
+                </div>
+                {% if form.your_destination.errors %}
+                <div class="error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ form.your_destination.errors.0 }}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Product Name -->
+            <div class="form-group">
+                <label for="id_av_name"><i class="fas fa-box"></i> Selected Product</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-box"></i>
+                    {{ form.av_name }}
+                </div>
+                {% if form.av_name.errors %}
+                <div class="error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ form.av_name.errors.0 }}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Product Price -->
+            <div class="form-group">
+                <label for="id_product_price"><i class="fas fa-tag"></i> Product Price</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-tag"></i>
+                    {{ form.product_price }}
+                </div>
+                {% if form.product_price.errors %}
+                <div class="error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ form.product_price.errors.0 }}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Image Upload -->
+            <div class="form-group">
+                <label for="id_image"><i class="fas fa-image"></i> Upload Image (Optional)</label>
+                <div class="input-wrapper">
+                    {{ form.image }}
+                </div>
+                {% if form.image.errors %}
+                <div class="error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ form.image.errors.0 }}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Order Date -->
+            <div class="form-group">
+                <label for="id_date_order"><i class="fas fa-calendar-alt"></i> Preferred Delivery Date</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-calendar-alt"></i>
+                    {{ form.date_order }}
+                </div>
+                {% if form.date_order.errors %}
+                <div class="error">
+                    <i class="fas fa-exclamation-circle"></i>
+                    {{ form.date_order.errors.0 }}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fas fa-paper-plane"></i> Confirm & Place Order
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Add CSS classes to form inputs for better styling
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add classes to all form inputs
+        const formInputs = document.querySelectorAll('input, select');
+        formInputs.forEach(input => {
+            if (!input.classList.contains('form-control')) {
+                input.classList.add('form-control');
+            }
+        });
+        
+        // Set placeholders
+        document.getElementById('id_your_name').placeholder = 'Enter your full name';
+        document.getElementById('id_email').placeholder = 'your.email@example.com';
+        document.getElementById('id_phone').placeholder = '+250 78X XXX XXX';
+        document.getElementById('id_your_destination').placeholder = 'Enter delivery address';
+        
+        // Load order data from localStorage if available
+        const orderData = JSON.parse(localStorage.getItem('currentOrder') || '{}');
+        if (orderData.productName) {
+            document.getElementById('summaryProduct').textContent = orderData.productName;
+            document.getElementById('id_av_name').value = orderData.productName;
+        }
+        if (orderData.productPrice) {
+            const price = orderData.productPrice;
+            document.getElementById('summaryPrice').textContent = '$' + price;
+            document.getElementById('summaryTotal').textContent = '$' + price;
+            document.getElementById('id_product_price').value = price;
+        }
+        
+        // Set today's date as default for date field
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('id_date_order').value = today;
+        document.getElementById('id_date_order').min = today;
+        
+        // Add animation to form groups on load
+        const formGroups = document.querySelectorAll('.form-group');
+        formGroups.forEach((group, index) => {
+            group.style.animationDelay = `${(index + 1) * 0.1}s`;
+        });
+    });
+
+    // Form submission with enhanced confirmation
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+        // Enhanced confirmation dialog
+        if (!confirm('🎯 Confirm Your Order\n\nAre you sure you want to submit this order?\n\n• All information will be processed securely\n• Our team will contact you within 24 hours\n• You will receive order confirmation via email\n• 24-hour delivery in Kigali guaranteed')) {
+            e.preventDefault();
+            return false;
+        }
+        
+        // Show success message
+        const successMessage = document.getElementById('successMessage');
+        successMessage.style.display = 'block';
+        
+        // Update button to loading state
+        const submitBtn = document.getElementById('submitBtn');
+        const originalIcon = submitBtn.querySelector('i');
+        const originalText = submitBtn.innerHTML;
+        
+        submitBtn.innerHTML = '<div class="loading"></div> Processing Your Order...';
+        submitBtn.disabled = true;
+        
+        // Scroll to top to show success message
+        document.querySelector('.form-container').scrollTop = 0;
+        
+        // Animate success message
+        setTimeout(() => {
+            successMessage.style.transform = 'scale(1.02)';
+            successMessage.style.transition = 'transform 0.3s ease';
+        }, 500);
+        
+        // Allow form to submit
+        return true;
+    });
+
+    // Auto-fill email if user is logged in (example)
+    function autoFillUserData() {
+        // This could be extended to fetch user data from Django context
+        const userEmail = '{{ user.email }}' || '';
+        if (userEmail && userEmail !== 'None') {
+            document.getElementById('id_email').value = userEmail;
+        }
+    }
+
+    // Validate phone number format
+    document.getElementById('id_phone').addEventListener('blur', function() {
+        const phone = this.value.trim();
+        const rwandaRegex = /^(\+250|250|0)(7[238])\d{7}$/;
+        
+        if (phone && !rwandaRegex.test(phone)) {
+            this.style.borderColor = '#ef4444';
+            this.style.boxShadow = '0 0 0 3px rgba(239, 68, 68, 0.1)';
+            alert('📱 Please enter a valid Rwanda phone number (e.g., +25078XXXXXXX)');
+        } else {
+            this.style.borderColor = '#e2e8f0';
+            this.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.05)';
+        }
+    });
+
+    // Real-time form validation
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            this.style.transform = 'translateY(-2px)';
+            const icon = this.parentElement.querySelector('i:first-child');
+            if (icon) {
+                icon.style.color = 'var(--primary-color)';
+                icon.style.transform = 'translateY(-50%) scale(1.2)';
+            }
+        });
+        
+        input.addEventListener('blur', function() {
+            this.style.transform = 'translateY(0)';
+            const icon = this.parentElement.querySelector('i:first-child');
+            if (icon) {
+                icon.style.color = '#666';
+                icon.style.transform = 'translateY(-50%) scale(1)';
+            }
+        });
+    });
+
+    // Initialize autofill on page load
+    autoFillUserData();
+</script>
+
+</body>
+</html>

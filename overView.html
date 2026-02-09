@@ -1,0 +1,343 @@
+{% extends 'base.html' %} 
+
+{% load static %}
+
+{% block title %}About Us | ELECTROGATES – {{ project_name }}{% endblock title %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .about-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                    url("{% static 'trading/image/electronic-devices-660.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: white;
+        padding: 100px 0;
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .about-hero h1 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    .about-hero p {
+        font-size: 1.3rem;
+        max-width: 800px;
+        margin: 0 auto;
+        opacity: 0.9;
+    }
+
+    /* Main Content */
+    .about-content {
+        background-color: #bebeeaff;
+        padding: 60px 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        margin-bottom: 60px;
+    }
+
+    .about-section {
+        margin-bottom: 50px;
+        padding-bottom: 30px;
+        border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .about-section:last-child {
+        border-bottom: none;
+    }
+
+    .about-section h2 {
+        color: var(--primary-color);
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .about-section h2:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80px;
+        height: 4px;
+        background: var(--primary-color);
+    }
+
+    .about-section p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Mission & Vision Cards */
+    .mission-vision-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        margin: 40px 0;
+    }
+
+    .mv-card {
+        background: white;
+        padding: 40px 30px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        border-top: 5px solid var(--primary-color);
+    }
+
+    .mv-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+
+    .mv-icon {
+        font-size: 3rem;
+        color: var(--primary-color);
+        margin-bottom: 20px;
+    }
+
+    .mv-card h3 {
+        color: var(--primary-color);
+        margin-bottom: 20px;
+        font-size: 1.8rem;
+    }
+
+    /* Values List */
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 25px;
+        margin-top: 30px;
+    }
+
+    .value-item {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 25px;
+        border-radius: 10px;
+        border-left: 4px solid var(--primary-color);
+        transition: transform 0.3s ease;
+    }
+
+    .value-item:hover {
+        transform: translateX(10px);
+    }
+
+    .value-item h4 {
+        color: var(--primary-color);
+        margin-bottom: 10px;
+        font-size: 1.3rem;
+    }
+
+    /* Team/Story Section */
+    .story-section {
+        background: white;
+        padding: 50px;
+        border-radius: 15px;
+        margin: 40px 0;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .story-image {
+        text-align: center;
+        margin: 40px 0;
+    }
+
+    .story-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        border: 5px solid white;
+    }
+
+    .image-caption {
+        margin-top: 15px;
+        font-style: italic;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    /* CTA Section */
+    .about-cta {
+        background: linear-gradient(135deg, var(--primary-color), #1a5fb4);
+        color: white;
+        padding: 60px 40px;
+        border-radius: 15px;
+        text-align: center;
+        margin-top: 60px;
+    }
+
+    .about-cta h3 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+    }
+
+    .about-cta p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto 30px;
+        opacity: 0.9;
+    }
+
+    .cta-buttons {
+        display: flex;
+        gap: 20px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .about-hero {
+            padding: 60px 20px;
+        }
+
+        .about-hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .about-content {
+            padding: 40px 20px;
+        }
+
+        .mission-vision-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .about-cta {
+            padding: 40px 20px;
+        }
+
+        .cta-buttons {
+            flex-direction: column;
+            align-items: center;
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+
+    <!-- Hero Section -->
+    <section class="about-hero">
+        <div class="container">
+            <h1>About GLOBALMART</h1>
+            <p>Your trusted partner for quality electronics in Kigali - Bridging technology gaps with certified refurbished devices and unparalleled local service.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="about-content">
+            
+            <!-- Our Story Section -->
+            <section class="about-section">
+                <h2>Our Story</h2>
+                <p>GLOBALMART was born from a simple observation: while technology advances rapidly, access to affordable, reliable electronics in Kigali remained limited. We saw an opportunity to bridge this gap by providing certified refurbished devices that combine quality with affordability.</p>
+                
+                <div class="story-image">
+                    <img src="{% static 'trading/image/electronic-devices-660.jpg' %}" alt="ELECTROGATES Electronics Collection">
+                    <p class="image-caption">Our curated collection of certified refurbished electronics</p>
+                </div>
+                
+                <p>Starting as a small venture in the heart of Kigali, we've grown into a trusted name in electronics, driven by our commitment to quality assurance and customer satisfaction. Every device we sell undergoes rigorous testing and certification, ensuring you get premium performance without the premium price.</p>
+            </section>
+
+            <!-- Mission & Vision -->
+            <section class="about-section">
+                <h2>Our Mission & Vision</h2>
+                <div class="mission-vision-cards">
+                    <div class="mv-card">
+                        <div class="mv-icon">🎯</div>
+                        <h3>Our Mission</h3>
+                        <p>To democratize access to quality electronics in Rwanda by providing certified refurbished devices with guaranteed performance, backed by exceptional local customer service and rapid delivery.</p>
+                    </div>
+                    <div class="mv-card">
+                        <div class="mv-icon">🚀</div>
+                        <h3>Our Vision</h3>
+                        <p>To become East Africa's most trusted destination for certified refurbished electronics, setting industry standards for quality assurance and customer experience in the technology sector.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- What We Do -->
+            <section class="about-section">
+                <h2>What We Do</h2>
+                <p>At GLOABALMART, we specialize in:</p>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <h4>Certified Refurbished Electronics</h4>
+                        <p>Every device undergoes 15-point quality checks, thorough testing, and comes with performance guarantees.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Rapid Kigali Delivery</h4>
+                        <p>Enjoy 24-hour delivery within Kigali City, including the Makuza Building area and surrounding neighborhoods.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Local Payment Solutions</h4>
+                        <p>Seamless integration with M-Pesa and MTN Mobile Money for convenient, secure transactions.</p>
+                    </div>
+                    <div class="value-item">
+                        <h4>Expert Support</h4>
+                        <p>Our local team provides personalized guidance and after-sales support for all purchases.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Our Values -->
+            <section class="about-section">
+                <h2>Our Core Values</h2>
+                <p>These principles guide everything we do at ELECTROGATES:</p>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                        <strong style="color: var(--primary-color);">✨ Trust & Transparency:</strong> Clear pricing, honest product conditions, and no hidden fees.
+                    </li>
+                    <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                        <strong style="color: var(--primary-color);">🔧 Quality Assurance:</strong> Rigorous testing and certification processes for every device.
+                    </li>
+                    <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                        <strong style="color: var(--primary-color);">🚀 Customer-Centric Service:</strong> Solutions designed around your needs, with rapid response times.
+                    </li>
+                    <li style="margin-bottom: 15px; padding-left: 30px; position: relative;">
+                        <strong style="color: var(--primary-color);">🌍 Sustainability:</strong> Promoting circular economy by extending device lifespans through refurbishment.
+                    </li>
+                    <li style="padding-left: 30px; position: relative;">
+                        <strong style="color: var(--primary-color);">🤝 Community Focus:</strong> Serving the Kigali community with localized solutions and support.
+                    </li>
+                </ul>
+            </section>
+
+            <!-- Why Choose Us -->
+            <section class="about-section">
+                <h2>Why Choose ELECTROGATES?</h2>
+                <p>In a market filled with uncertainty about second-hand electronics, we stand apart:</p>
+                <p><strong>Guaranteed Quality:</strong> Our "Certified Refurbished" badge means rigorous testing, genuine parts, and performance warranties.</p>
+                <p><strong>Local Advantage:</strong> Based in Kigali, we understand local needs and provide faster service than international competitors.</p>
+                <p><strong>Risk-Free Shopping:</strong> Comprehensive return policies and customer protection ensure you shop with confidence.</p>
+                <p><strong>Expert Curation:</strong> We select only the best devices that meet our strict performance standards.</p>
+            </section>
+
+        </div>
+
+        <!-- Call to Action -->
+        <section class="about-cta">
+            <h3>Join Our Growing Community</h3>
+            <p>Thousands in Kigali already trust ELECTROGATES for their electronics needs. Experience the difference today.</p>
+            {% comment %} <div class="cta-buttons">
+                <a href="{% url 'shop' %}" class="btn btn-light btn-lg px-5 py-3">Shop Now</a>
+                <a href="{% url 'contact' %}" class="btn btn-outline-light btn-lg px-5 py-3">Contact Us</a>
+            </div> {% endcomment %}
+        </section>
+    </div>
+
+{% endblock content %}

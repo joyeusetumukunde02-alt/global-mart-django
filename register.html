@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | GlobalMart Electronics</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+            padding: 20px;
+            position: relative;
+        }
+
+        /* Animated Background Overlay */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 94, 184, 0.4) 0%, rgba(32, 173, 233, 0.4) 50%, rgba(240, 123, 255, 0.3) 100%);
+            z-index: -1;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-10px) rotate(0.5deg); }
+            66% { transform: translateY(5px) rotate(-0.5deg); }
+        }
+
+        /* Card Styling */
+        .card {
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 520px;
+            padding: 60px 50px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
+            animation: float 8s ease-in-out infinite;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Card Decorative Elements */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #005eb8, #20ade9, #f07bff);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Tech Pattern Overlay */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 80%, rgba(0, 94, 184, 0.03) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 20%, rgba(32, 173, 233, 0.03) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Logo */
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-icon {
+            display: inline-block;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon .fa-globe {
+            font-size: 4.5rem;
+            background: linear-gradient(135deg, #005eb8, #20ade9, #f07bff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 4px 15px rgba(0, 94, 184, 0.2));
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(32, 173, 233, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .logo h1 {
+            color: #005eb8;
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 10px rgba(0, 94, 184, 0.1);
+        }
+
+        .logo .tagline {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 500;
+            background: linear-gradient(90deg, #666, #005eb8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Progress Steps */
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            flex: 1;
+        }
+
+        .step-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e0e0e0, #f5f5f5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .step.active .step-circle {
+            background: linear-gradient(135deg, #005eb8, #20ade9);
+            color: white;
+            transform: scale(1.15);
+            box-shadow: 0 8px 25px rgba(0, 94, 184, 0.3);
+        }
+
+        .step-label {
+            font-size: 0.85rem;
+            color: #999;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .step.active .step-label {
+            color: #005eb8;
+            font-weight: 700;
+            transform: translateY(2px);
+        }
+
+        .progress-line {
+            flex: 1;
+            height: 3px;
+            background: linear-gradient(90deg, #e0e0e0, #f5f5f5);
+            margin: 0 10px;
+            position: relative;
+            top: -24px;
+            z-index: 1;
+        }
+
+        .progress-line.active {
+            background: linear-gradient(90deg, #005eb8, #20ade9);
+        }
+
+        /* Form Container */
+        .form-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Form Styling */
+        .form-group {
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #444;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #20ade9;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 18px 20px 18px 60px;
+            border: 2px solid #e8f0fe;
+            border-radius: 16px;
+            font-size: 1.05rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(248, 250, 252, 0.8);
+            color: #333;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #20ade9;
+            background: white;
+            box-shadow: 0 8px 25px rgba(32, 173, 233, 0.15),
+                        inset 0 0 0 1px rgba(32, 173, 233, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .form-control:hover {
+            border-color: #bae6fd;
+        }
+
+        /* Register Button */
+        .btn-register {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #005eb8 0%, #20ade9 100%);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 40px 0 30px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.7s ease;
+        }
+
+        .btn-register:hover::before {
+            left: 100%;
+        }
+
+        .btn-register:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 94, 184, 0.4);
+        }
+
+        .btn-register:active {
+            transform: translateY(-1px);
+        }
+
+        /* Login Link */
+        .login-text {
+            text-align: center;
+            color: #666;
+            font-size: 1rem;
+            position: relative;
+            z-index: 1;
+            padding-top: 20px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .login-text a {
+            color: #005eb8;
+            text-decoration: none;
+            font-weight: 700;
+            position: relative;
+            padding: 4px 8px;
+            transition: all 0.3s ease;
+        }
+
+        .login-text a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #005eb8, #20ade9);
+            transition: width 0.3s ease;
+        }
+
+        .login-text a:hover::after {
+            width: 100%;
+        }
+
+        /* Terms Checkbox */
+        .terms-group {
+            display: flex;
+            align-items: flex-start;
+            margin: 30px 0;
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .terms-group input[type="checkbox"] {
+            margin-right: 15px;
+            margin-top: 3px;
+            width: 20px;
+            height: 20px;
+            accent-color: #005eb8;
+            cursor: pointer;
+        }
+
+        .terms-group label {
+            color: #555;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            cursor: pointer;
+        }
+
+        .terms-group a {
+            color: #005eb8;
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+        }
+
+        .terms-group a:hover {
+            text-decoration: underline;
+        }
+
+        /* Success Message */
+        .success-message {
+            background: linear-gradient(135deg, #10b981, #34d399);
+            color: white;
+            padding: 20px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+            text-align: center;
+            display: none;
+            animation: slideDown 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .card {
+                padding: 40px 30px;
+                max-width: 95%;
+            }
+            
+            .logo h1 {
+                font-size: 2.2rem;
+            }
+            
+            .logo-icon .fa-globe {
+                font-size: 3.5rem;
+            }
+            
+            .progress-steps {
+                margin: 30px 0;
+            }
+            
+            .step-circle {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            
+            .btn-register {
+                padding: 18px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Error Styling */
+        .django-form .errorlist {
+            background: linear-gradient(135deg, #fee, #fff5f5);
+            border: 1px solid #fecaca;
+            border-radius: 12px;
+            padding: 15px;
+            margin-top: 10px;
+            color: #dc2626;
+            font-size: 0.9rem;
+        }
+
+        .django-form .errorlist li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 5px;
+        }
+        
+        /* Password match indicator */
+        .password-match {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: #f8fafc;
+        }
+        
+        .password-match.valid {
+            color: #10b981;
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+        }
+        
+        .password-match.invalid {
+            color: #ef4444;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- Logo -->
+    <div class="logo">
+        <div class="logo-icon">
+            <i class="fas fa-globe-americas"></i>
+        </div>
+        <h1>GlobalMart</h1>
+        <p class="tagline">Join Africa's Premier Electronics Marketplace</p>
+        <p style="color: #777; font-size: 0.95rem; margin-top: 10px; font-weight: 500;">
+            <i class="fas fa-shield-alt" style="color: #20ade9;"></i> Secure Registration • Fast Setup • Instant Access
+        </p>
+    </div>
+
+    <!-- Progress Steps -->
+    <div class="progress-steps">
+        <div class="step active">
+            <div class="step-circle">1</div>
+            <div class="step-label">Account Details</div>
+        </div>
+        <div class="progress-line active"></div>
+        <div class="step">
+            <div class="step-circle">2</div>
+            <div class="step-label">Security Setup</div>
+        </div>
+        <div class="progress-line"></div>
+        <div class="step">
+            <div class="step-circle">3</div>
+            <div class="step-label">Complete</div>
+        </div>
+    </div>
+
+    <!-- Success Message -->
+    <div class="success-message" id="successMessage">
+        <i class="fas fa-check-circle fa-2x" style="margin-bottom: 10px;"></i>
+        <h3 style="margin-bottom: 5px;">Registration Successful!</h3>
+        <p>Welcome to GlobalMart! Redirecting to your dashboard...</p>
+    </div>
+
+    <!-- Registration Form -->
+    <div class="form-container">
+        <div class="django-form">
+            <form method="POST" id="registerForm">
+                {% csrf_token %}
+                
+                <!-- Display form errors -->
+                {% if form.non_field_errors %}
+                <div class="errorlist">
+                    {% for error in form.non_field_errors %}
+                    <p><i class="fas fa-exclamation-triangle"></i> {{ error }}</p>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Username Field -->
+                <div class="form-group">
+                    <label for="id_username">
+                        <i class="fas fa-user-circle" style="color: #20ade9;"></i>
+                        Username
+                    </label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        {{ form.username }}
+                    </div>
+                    {% if form.username.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.username.errors %}
+                        <li><i class="fas fa-exclamation-circle"></i> {{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <!-- Email Field -->
+                <div class="form-group">
+                    <label for="id_email">
+                        <i class="fas fa-envelope" style="color: #20ade9;"></i>
+                        Email Address
+                    </label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        {{ form.email }}
+                    </div>
+                    {% if form.email.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.email.errors %}
+                        <li><i class="fas fa-exclamation-circle"></i> {{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="id_password">
+                        <i class="fas fa-lock" style="color: #20ade9;"></i>
+                        Create Password
+                    </label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        {{ form.password }}
+                        <i class="fas fa-eye" id="togglePassword" style="left: auto; right: 20px; cursor: pointer; color: #94a3b8;"></i>
+                    </div>
+                    
+                    {% if form.password.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.password.errors %}
+                        <li><i class="fas fa-exclamation-circle"></i> {{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <!-- Confirm Password Field -->
+                <div class="form-group">
+                    <label for="id_confirm_password">
+                        <i class="fas fa-lock" style="color: #20ade9;"></i>
+                        Confirm Password
+                    </label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        {{ form.confirm_password }}
+                        <i class="fas fa-eye" id="toggleConfirmPassword" style="left: auto; right: 20px; cursor: pointer; color: #94a3b8;"></i>
+                    </div>
+                    
+                    <!-- Password match indicator -->
+                    <div id="password-match" class="password-match"></div>
+                    
+                    {% if form.confirm_password.errors %}
+                    <ul class="errorlist">
+                        {% for error in form.confirm_password.errors %}
+                        <li><i class="fas fa-exclamation-circle"></i> {{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="terms-group">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">
+                        I agree to GlobalMart's <a href="javascript:void(0)" onclick="showTerms()">Terms of Service</a> and <a href="javascript:void(0)" onclick="showPrivacy()">Privacy Policy</a>. I understand that my data will be used to enhance my shopping experience and I may receive promotional emails.
+                    </label>
+                </div>
+
+                <!-- Register Button -->
+                <button type="submit" class="btn-register">
+                    <i class="fas fa-user-plus"></i> Create My GlobalMart Account
+                </button>
+            </form>
+        </div>
+
+        <!-- Login Link -->
+        <div class="login-text">
+            Already part of GlobalMart? 
+            <a href="{% url 'login' %}">Sign in to your account</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Add CSS classes to Django form fields for styling
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add form-control class to all input fields
+        const inputs = document.querySelectorAll('#id_username, #id_email, #id_password, #id_confirm_password');
+        inputs.forEach(input => {
+            input.classList.add('form-control');
+            input.placeholder = input.placeholder || '';
+        });
+        
+        // Set specific placeholders
+        document.getElementById('id_username').placeholder = 'Choose your unique username';
+        document.getElementById('id_email').placeholder = 'Enter your professional email';
+        document.getElementById('id_password').placeholder = 'Create a secure password';
+        document.getElementById('id_confirm_password').placeholder = 'Re-enter your password';
+    });
+
+    // Toggle password visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+    const password = document.getElementById('id_password');
+    const confirmPassword = document.getElementById('id_confirm_password');
+    
+    if (togglePassword && password) {
+        togglePassword.addEventListener('click', function() {
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+            this.style.color = type === 'text' ? '#20ade9' : '#94a3b8';
+        });
+    }
+    
+    if (toggleConfirmPassword && confirmPassword) {
+        toggleConfirmPassword.addEventListener('click', function() {
+            const type = confirmPassword.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPassword.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+            this.style.color = type === 'text' ? '#20ade9' : '#94a3b8';
+        });
+    }
+
+    // Check password match
+    function checkPasswordMatch() {
+        const matchElement = document.getElementById('password-match');
+        
+        if (password && confirmPassword && password.value && confirmPassword.value) {
+            if (password.value === confirmPassword.value) {
+                matchElement.innerHTML = '<i class="fas fa-check-circle"></i> Passwords match';
+                matchElement.className = 'password-match valid';
+            } else {
+                matchElement.innerHTML = '<i class="fas fa-times-circle"></i> Passwords do not match';
+                matchElement.className = 'password-match invalid';
+            }
+        } else {
+            matchElement.innerHTML = '';
+            matchElement.className = 'password-match';
+        }
+    }
+    
+    // Real-time password match checking
+    if (password && confirmPassword) {
+        password.addEventListener('input', checkPasswordMatch);
+        confirmPassword.addEventListener('input', checkPasswordMatch);
+    }
+
+    // Form submission
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        // Check terms agreement
+        const termsCheckbox = document.getElementById('terms');
+        if (termsCheckbox && !termsCheckbox.checked) {
+            e.preventDefault();
+            alert('📝 Please agree to the Terms of Service and Privacy Policy to continue.');
+            return false;
+        }
+        
+        // Check password match
+        if (password && confirmPassword && password.value !== confirmPassword.value) {
+            e.preventDefault();
+            alert('🔒 Passwords do not match. Please make sure both password fields are identical.');
+            return false;
+        }
+        
+        // Show success message and update progress
+        const successMessage = document.getElementById('successMessage');
+        if (successMessage) {
+            successMessage.style.display = 'block';
+        }
+        
+        // Update progress steps
+        document.querySelectorAll('.step').forEach(step => step.classList.remove('active'));
+        document.querySelectorAll('.step')[2].classList.add('active');
+        document.querySelectorAll('.progress-line').forEach(line => line.classList.add('active'));
+        
+        // Show loading state on button
+        const submitBtn = this.querySelector('button[type="submit"]');
+        if (submitBtn) {
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Your Account...';
+            submitBtn.disabled = true;
+        }
+        
+        // Allow form to submit
+        return true;
+    });
+
+    // Terms and Privacy functions
+    function showTerms() {
+        alert('📜 GlobalMart Terms of Service\n\nWelcome to GlobalMart! By creating an account, you agree to:\n\n1. Use our platform for legitimate electronics purchases only\n2. Maintain account security and notify us of any unauthorized access\n3. Accept our 7-day return policy and warranty terms\n4. Respect all intellectual property rights\n5. Comply with all applicable laws in Rwanda\n\nFor the complete Terms of Service, email: legal@globalmart.com');
+    }
+    
+    function showPrivacy() {
+        alert('🔒 GlobalMart Privacy Policy\n\nYour Privacy Matters:\n\n• We collect only necessary information to process orders and provide support\n• Your data is encrypted and stored securely\n• We never sell your personal information to third parties\n• You can manage communication preferences in your account settings\n• We comply with all data protection regulations\n\nContact our Privacy Team: privacy@globalmart.com');
+    }
+    
+    // Add focus effects to form inputs
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.form-control').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.transform = 'translateY(-2px)';
+                const icon = this.parentElement.querySelector('i:first-child');
+                if (icon) icon.style.color = '#005eb8';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.transform = 'translateY(0)';
+                const icon = this.parentElement.querySelector('i:first-child');
+                if (icon) icon.style.color = '#20ade9';
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

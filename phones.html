@@ -1,0 +1,913 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Premium Smartphones | GlobalMart Electronics{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .phones-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.8)), 
+                    url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2080&q=80');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: white;
+        padding: 120px 0 80px;
+        text-align: center;
+        margin-bottom: 50px;
+        position: relative;
+    }
+
+    .phones-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+        z-index: 0;
+    }
+
+    .phones-hero .container {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-title {
+        font-size: 3.8rem;
+        font-weight: 900;
+        margin-bottom: 25px;
+        text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(45deg, #fff, #20ade9, #fff);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: shimmer 3s ease-in-out infinite;
+        background-size: 200% auto;
+    }
+
+    @keyframes shimmer {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .hero-subtitle {
+        font-size: 1.4rem;
+        max-width: 800px;
+        margin: 0 auto 40px;
+        opacity: 0.95;
+        line-height: 1.7;
+        font-weight: 300;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Stats Section */
+    .stats-section {
+        background: linear-gradient(135deg, rgba(0, 94, 184, 0.95), rgba(32, 173, 233, 0.95));
+        color: white;
+        padding: 40px 0;
+        margin: 60px 0;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 94, 184, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stats-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,0 L100,0 L100,100 Z" fill="rgba(255,255,255,0.1)"/></svg>');
+        background-size: cover;
+        opacity: 0.1;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .stat-item:hover {
+        transform: translateY(-5px);
+    }
+
+    .stat-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: rgba(255, 255, 255, 0.9);
+    }
+
+    .stat-number {
+        font-size: 2.8rem;
+        font-weight: 800;
+        margin-bottom: 5px;
+        display: block;
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        opacity: 0.9;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+    }
+
+    /* Products Section */
+    .products-section {
+        padding: 60px 0;
+        background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+    }
+
+    .section-header {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .section-title {
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #005eb8;
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, #005eb8, #20ade9);
+        border-radius: 2px;
+    }
+
+    .section-subtitle {
+        font-size: 1.2rem;
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* Product Cards */
+    .product-card {
+        border: none;
+        border-radius: 25px;
+        overflow: hidden;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+        height: 100%;
+        background: white;
+        position: relative;
+        margin-bottom: 40px;
+        border: 1px solid rgba(0, 94, 184, 0.1);
+    }
+
+    .product-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 5px;
+        background: linear-gradient(90deg, #005eb8, #20ade9);
+        z-index: 2;
+    }
+
+    .product-card:hover {
+        transform: translateY(-20px) scale(1.03);
+        box-shadow: 0 30px 60px rgba(0, 94, 184, 0.2);
+        border-color: rgba(0, 94, 184, 0.2);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        padding: 8px 22px;
+        border-radius: 25px;
+        font-size: 0.85rem;
+        font-weight: 700;
+        z-index: 2;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        backdrop-filter: blur(10px);
+    }
+
+    .badge-best-seller {
+        background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        color: white;
+    }
+
+    .badge-new {
+        background: linear-gradient(135deg, #4cd964, #5de870);
+        color: white;
+    }
+
+    .badge-refurbished {
+        background: linear-gradient(135deg, #9b59b6, #8e44ad);
+        color: white;
+    }
+
+    .badge-premium {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+    }
+
+    .product-image-container {
+        height: 280px;
+        overflow: hidden;
+        position: relative;
+        background: linear-gradient(135deg, #f8fafc, #e8f0fe);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        cursor: pointer;
+    }
+
+    .product-img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        filter: drop-shadow(0 5px 15px rgba(0, 0, 0, 0.1));
+    }
+
+    .product-card:hover .product-img {
+        transform: scale(1.15);
+        filter: drop-shadow(0 10px 25px rgba(0, 0, 0, 0.2));
+    }
+
+    /* REMOVED PRODUCT OVERLAY - No duplicate buttons */
+
+    .product-info {
+        padding: 30px;
+        background: white;
+        position: relative;
+    }
+
+    .product-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #1a202c;
+        margin-bottom: 15px;
+        line-height: 1.4;
+        min-height: 66px;
+    }
+
+    .product-description {
+        color: #666;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 20px;
+        min-height: 60px;
+    }
+
+    .product-price-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 25px;
+        padding: 15px 0;
+        border-top: 1px solid #e8f0fe;
+        border-bottom: 1px solid #e8f0fe;
+    }
+
+    .current-price {
+        font-size: 1.8rem;
+        font-weight: 900;
+        color: #005eb8;
+        display: flex;
+        align-items: baseline;
+        gap: 5px;
+    }
+
+    .current-price::before {
+        content: '$';
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    .original-price {
+        font-size: 1.2rem;
+        color: #999;
+        text-decoration: line-through;
+    }
+
+    .product-rating {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .stars {
+        color: #ffd700;
+        font-size: 1.1rem;
+        letter-spacing: 2px;
+    }
+
+    .rating-count {
+        color: #666;
+        font-size: 0.9rem;
+        font-weight: 500;
+    }
+
+    .product-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-top: 25px;
+    }
+
+    .btn-order {
+        background: linear-gradient(135deg, #005eb8, #20ade9);
+        color: white;
+        border: none;
+        padding: 14px;
+        border-radius: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        text-decoration: none;
+        text-align: center;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+        box-shadow: 0 5px 15px rgba(0, 94, 184, 0.2);
+    }
+
+    .btn-order:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 25px rgba(0, 94, 184, 0.3);
+        background: linear-gradient(135deg, #004a99, #1a9cd8);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-details {
+        background: white;
+        color: #005eb8;
+        border: 2px solid #e0e0e0;
+        padding: 14px;
+        border-radius: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+    }
+
+    .btn-details:hover {
+        border-color: #20ade9;
+        color: #20ade9;
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(32, 173, 233, 0.1);
+    }
+
+    .btn-favorite {
+        grid-column: span 2;
+        background: #f8f9fa;
+        color: #666;
+        border: 2px solid #e0e0e0;
+        padding: 12px;
+        border-radius: 15px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        font-size: 0.95rem;
+    }
+
+    .btn-favorite:hover {
+        background: #fff5f5;
+        color: #ff6b6b;
+        border-color: #ff6b6b;
+        transform: translateY(-2px);
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 100px 20px;
+        background: white;
+        border-radius: 25px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        margin: 40px 0;
+        border: 2px dashed #e8f0fe;
+    }
+
+    .empty-state i {
+        font-size: 5rem;
+        color: #e0e0e0;
+        margin-bottom: 25px;
+        opacity: 0.7;
+    }
+
+    .empty-state h3 {
+        color: #666;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        font-weight: 700;
+    }
+
+    .empty-state p {
+        color: #999;
+        max-width: 600px;
+        margin: 0 auto 35px;
+        line-height: 1.8;
+        font-size: 1.1rem;
+    }
+
+    /* CTA Section */
+    .cta-section {
+        background: linear-gradient(135deg, #005eb8, #20ade9);
+        color: white;
+        padding: 80px 0;
+        margin-top: 80px;
+        border-radius: 25px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 40px rgba(0, 94, 184, 0.3);
+    }
+
+    .cta-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><circle cx="50" cy="50" r="40" stroke="rgba(255,255,255,0.1)" stroke-width="1" fill="none"/></svg>');
+        opacity: 0.1;
+    }
+
+    .cta-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+    }
+
+    .cta-subtitle {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        max-width: 700px;
+        margin: 0 auto 40px;
+        line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+        }
+        
+        .product-image-container {
+            height: 220px;
+            padding: 20px;
+        }
+        
+        .product-title {
+            font-size: 1.2rem;
+            min-height: auto;
+        }
+        
+        .product-description {
+            min-height: auto;
+        }
+        
+        .product-actions {
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .btn-favorite {
+            grid-column: span 1;
+        }
+        
+        .stat-item {
+            margin-bottom: 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="phones-hero">
+    <div class="container">
+        <h1 class="hero-title">Premium Smartphones Collection</h1>
+        <p class="hero-subtitle">Discover the latest smartphones, certified refurbished devices, and premium accessories. Experience cutting-edge technology with guaranteed quality and rapid delivery in Kigali.</p>
+        <div class="mt-5">
+            <a href="#products" class="btn btn-light btn-lg px-5 py-3 me-3" style="font-weight: 600; border-radius: 12px;">
+                <i class="fas fa-mobile-alt me-2"></i> Browse Phones
+            </a>
+            <a href="/contact/" class="btn btn-outline-light btn-lg px-5 py-3" style="font-weight: 600; border-radius: 12px;">
+                <i class="fas fa-headset me-2"></i> Get Expert Advice
+            </a>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="row text-center">
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <span class="stat-number">24h</span>
+                    <span class="stat-label">Delivery in Kigali</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <span class="stat-number">12mo</span>
+                    <span class="stat-label">Warranty Guarantee</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Quality Tested</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-6">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <span class="stat-number">7-Day</span>
+                    <span class="stat-label">Easy Returns</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products-section">
+        <div class="section-header">
+            <h2 class="section-title">Our Smartphone Collection</h2>
+            <p class="section-subtitle">Browse through our premium selection of new and certified refurbished smartphones. All devices are tested, certified, and ready for immediate delivery.</p>
+        </div>
+
+        <div class="row g-4" id="productsGrid">
+            {% for product in products %}
+            <div class="col-xl-3 col-lg-4 col-md-6">
+                <div class="product-card">
+                    <!-- Badge -->
+                    {% if forloop.counter <= 2 %}
+                    <span class="product-badge badge-best-seller">🔥 Best Seller</span>
+                    {% elif forloop.counter <= 4 %}
+                    <span class="product-badge badge-new">🆕 New Arrival</span>
+                    {% elif product.price <= 300 %}
+                    <span class="product-badge badge-refurbished">♻️ Certified</span>
+                    {% else %}
+                    <span class="product-badge badge-premium">⚡ Premium</span>
+                    {% endif %}
+
+                    <!-- Product Image with click to view details -->
+                    <div class="product-image-container" onclick="showPhoneDetails('{{ product.id }}')">
+                        <img src="{{ product.av_image.url }}" class="product-img" alt="{{ product.av_name }}">
+                    </div>
+
+                    <!-- Product Info -->
+                    <div class="product-info">
+                        <h5 class="product-title">{{ product.av_name }}</h5>
+                        
+                        <p class="product-description">
+                            Premium smartphone with advanced features, excellent camera quality, and long-lasting battery life. Perfect for work and entertainment.
+                        </p>
+
+                        <div class="product-price-section">
+                            <div class="current-price">{{ product.price }}</div>
+                            <div class="product-rating">
+                                <div class="stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="rating-count">(18 reviews)</span>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="product-actions">
+                            <a href="/order/" class="btn-order" onclick="setProductToOrder('{{ product.id }}', '{{ product.av_name }}', '{{ product.price }}')">
+                                <i class="fas fa-shopping-cart"></i> Order Now
+                            </a>
+                            <button class="btn-details" onclick="showPhoneDetails('{{ product.id }}')">
+                                <i class="fas fa-eye"></i> View Details
+                            </button>
+                            <button class="btn-favorite" onclick="toggleFavorite('{{ product.id }}')">
+                                <i class="far fa-heart"></i> Save for Later
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12">
+                <div class="empty-state">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Smartphone Collection Coming Soon</h3>
+                    <p>We're currently updating our premium smartphone collection with the latest models and certified refurbished devices. New arrivals will be available shortly!</p>
+                    <a href="/" class="btn btn-primary btn-lg px-5 py-3" style="border-radius: 12px;">
+                        <i class="fas fa-home me-2"></i> Return to Homepage
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h3 class="cta-title">Need Help Choosing the Right Phone?</h3>
+            <p class="cta-subtitle">Our mobile experts are here to help you find the perfect smartphone for your needs, budget, and lifestyle requirements.</p>
+            <div class="mt-4">
+                <a href="/contact/" class="btn btn-light btn-lg px-5 py-3 me-3" style="font-weight: 600; border-radius: 12px;">
+                    <i class="fas fa-headset me-2"></i> Contact Our Experts
+                </a>
+                <a href="tel:+250780372040" class="btn btn-outline-light btn-lg px-5 py-3" style="font-weight: 600; border-radius: 12px;">
+                    <i class="fas fa-phone me-2"></i> Call Now: +250 780 372 040
+                </a>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    // Store product info for order page
+    function setProductToOrder(productId, productName, productPrice) {
+        const orderData = {
+            productId: productId,
+            productName: productName,
+            productPrice: productPrice,
+            category: 'phone',
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem('currentOrder', JSON.stringify(orderData));
+        sessionStorage.setItem('selectedProduct', productId);
+        showNotification(`"${productName}" added to order!`, 'success');
+        return true; // Allow the link to proceed
+    }
+
+    // Show phone details modal
+    function showPhoneDetails(productId) {
+        // Find the product card
+        const productCard = document.querySelector(`[onclick*="showPhoneDetails('${productId}')"]`).closest('.product-card');
+        const productTitle = productCard.querySelector('.product-title').textContent;
+        const productPrice = productCard.querySelector('.current-price').textContent;
+        const productImage = productCard.querySelector('.product-img').src;
+        const isRefurbished = productCard.querySelector('.badge-refurbished') ? 'Yes' : 'No';
+        const badge = productCard.querySelector('.product-badge').textContent;
+        
+        // Create modal content
+        const modalContent = `
+            <div class="modal fade" id="phoneModal" tabindex="-1">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content" style="border-radius: 20px; overflow: hidden; border: none;">
+                        <div class="modal-header" style="background: linear-gradient(135deg, #005eb8, #20ade9); color: white; border: none;">
+                            <h5 class="modal-title fw-bold">${productTitle}</h5>
+                            <span class="badge ${badge.includes('🔥') ? 'badge-best-seller' : badge.includes('🆕') ? 'badge-new' : badge.includes('♻️') ? 'badge-refurbished' : 'badge-premium'}" style="font-size: 0.8rem; padding: 5px 15px;">
+                                ${badge}
+                            </span>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body p-0">
+                            <div class="row g-0">
+                                <!-- Product Image -->
+                                <div class="col-md-6 p-5" style="background: linear-gradient(135deg, #f8fafc, #e8f0fe);">
+                                    <div class="text-center">
+                                        <img src="${productImage}" alt="${productTitle}" 
+                                             style="max-width: 100%; height: 300px; object-fit: contain;">
+                                    </div>
+                                    <div class="mt-4 text-center">
+                                        <h3 class="text-primary mb-3" style="font-weight: 900;">$${productPrice}</h3>
+                                        <div class="d-grid gap-2">
+                                            <a href="/order/" class="btn btn-primary btn-lg" 
+                                               onclick="setProductToOrder('${productId}', '${productTitle}', '${productPrice}')">
+                                                <i class="fas fa-shopping-cart me-2"></i> Order Now
+                                            </a>
+                                            <button class="btn btn-outline-primary btn-lg" onclick="addToCart('${productId}'); $('#phoneModal').modal('hide');">
+                                                <i class="fas fa-cart-plus me-2"></i> Add to Cart
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Product Details -->
+                                <div class="col-md-6 p-5">
+                                    <h5 class="fw-bold mb-4">Product Details</h5>
+                                    <div class="mb-4">
+                                        <h6 class="fw-bold text-primary mb-3">Key Specifications:</h6>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Premium Build Quality</li>
+                                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> High-Resolution Display</li>
+                                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Professional-Grade Camera</li>
+                                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Long-Lasting Battery</li>
+                                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Fast Charging Support</li>
+                                            <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Latest Processor</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <h6 class="fw-bold text-primary mb-3">Package Includes:</h6>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2"><i class="fas fa-box text-info me-2"></i> Original Device</li>
+                                            <li class="mb-2"><i class="fas fa-charging-station text-info me-2"></i> Charger & Cable</li>
+                                            <li class="mb-2"><i class="fas fa-mobile-alt text-info me-2"></i> Screen Protector</li>
+                                            <li class="mb-2"><i class="fas fa-shield-alt text-info me-2"></i> Protective Case</li>
+                                            <li class="mb-2"><i class="fas fa-file-alt text-info me-2"></i> User Manual</li>
+                                        </ul>
+                                    </div>
+                                    
+                                    <div class="mb-4">
+                                        <h6 class="fw-bold text-primary mb-3">Service Information:</h6>
+                                        <ul class="list-unstyled">
+                                            <li class="mb-2"><i class="fas fa-truck text-warning me-2"></i> 24-Hour Kigali Delivery</li>
+                                            <li class="mb-2"><i class="fas fa-shield-alt text-warning me-2"></i> 12-Month Warranty</li>
+                                            <li class="mb-2"><i class="fas fa-exchange-alt text-warning me-2"></i> 7-Day Return Policy</li>
+                                            <li class="mb-2"><i class="fas fa-certificate text-warning me-2"></i> Certified Refurbished: ${isRefurbished}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Remove existing modal
+        const existingModal = document.getElementById('phoneModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+        
+        // Add new modal to body
+        document.body.insertAdjacentHTML('beforeend', modalContent);
+        
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('phoneModal'));
+        modal.show();
+    }
+
+    // Add to Cart Function
+    function addToCart(productId) {
+        showNotification('Smartphone added to cart!', 'success');
+        updateCartCount(1);
+    }
+
+    // Toggle Favorite
+    function toggleFavorite(productId) {
+        const btn = event.target.closest('.btn-favorite');
+        const icon = btn.querySelector('i');
+        
+        if (icon.classList.contains('far')) {
+            icon.className = 'fas fa-heart';
+            btn.innerHTML = '<i class="fas fa-heart"></i> Saved';
+            btn.style.color = '#ff6b6b';
+            btn.style.borderColor = '#ff6b6b';
+            btn.style.background = '#fff5f5';
+            showNotification('Added to saved items!', 'info');
+        } else {
+            icon.className = 'far fa-heart';
+            btn.innerHTML = '<i class="far fa-heart"></i> Save for Later';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+            btn.style.background = '';
+            showNotification('Removed from saved items!', 'info');
+        }
+    }
+
+    // Notification System
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+            ${message}
+        `;
+        
+        notification.style.cssText = `
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+            color: white;
+            padding: 18px 28px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideIn 0.4s ease;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+            max-width: 400px;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.4s ease';
+            setTimeout(() => notification.remove(), 400);
+        }, 3500);
+    }
+
+    // Update cart count
+    function updateCartCount(increment = 0) {
+        let cartCount = parseInt(localStorage.getItem('cartCount') || '0');
+        cartCount += increment;
+        localStorage.setItem('cartCount', cartCount);
+        
+        const cartBadge = document.querySelector('.cart-badge');
+        if (cartBadge) {
+            cartBadge.textContent = cartCount;
+            cartBadge.style.display = cartCount > 0 ? 'flex' : 'none';
+        }
+    }
+
+    // Add CSS for notifications
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartCount(0);
+        
+        // Add Bootstrap if not present
+        if (typeof bootstrap === 'undefined') {
+            const bootstrapCSS = document.createElement('link');
+            bootstrapCSS.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css';
+            bootstrapCSS.rel = 'stylesheet';
+            document.head.appendChild(bootstrapCSS);
+            
+            const bootstrapJS = document.createElement('script');
+            bootstrapJS.src = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js';
+            document.head.appendChild(bootstrapJS);
+        }
+        
+        // Make product images clickable for details
+        document.querySelectorAll('.product-image-container').forEach(container => {
+            container.style.cursor = 'pointer';
+        });
+    });
+</script>
+
+{% endblock %}

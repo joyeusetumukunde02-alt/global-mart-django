@@ -1,0 +1,884 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Premium Accessories | GlobalMart Electronics{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Hero Section */
+    .accessories-hero {
+        background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.8)), 
+                    url('https://images.unsplash.com/photo-1498049794561-7780e7231661?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: white;
+        padding: 100px 0 60px;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+    .hero-title {
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+        background: linear-gradient(to right, #fff, #20ade9);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        max-width: 700px;
+        margin: 0 auto 30px;
+        opacity: 0.9;
+        line-height: 1.6;
+    }
+
+    /* Category Filter */
+    .category-filter {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 40px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e8f0fe;
+    }
+
+    .category-filter h3 {
+        color: #005eb8;
+        margin-bottom: 20px;
+        font-weight: 700;
+        font-size: 1.4rem;
+    }
+
+    .filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    .filter-btn {
+        padding: 10px 24px;
+        border: 2px solid #e0e0e0;
+        border-radius: 25px;
+        background: white;
+        color: #666;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .filter-btn:hover {
+        border-color: #20ade9;
+        color: #005eb8;
+        transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+        background: linear-gradient(135deg, #005eb8, #20ade9);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 5px 15px rgba(0, 94, 184, 0.2);
+    }
+
+    /* Product Cards */
+    .product-card {
+        border: none;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        height: 100%;
+        background: white;
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+    .product-card:hover {
+        transform: translateY(-15px) scale(1.02);
+        box-shadow: 0 25px 50px rgba(0, 94, 184, 0.15);
+    }
+
+    .product-badge {
+        position: absolute;
+        top: 15px;
+        left: 15px;
+        background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        color: white;
+        padding: 6px 18px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        z-index: 2;
+        box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+    }
+
+    .product-badge.best-seller {
+        background: linear-gradient(135deg, #ffd700, #ffed4e);
+        color: #333;
+    }
+
+    .product-badge.new {
+        background: linear-gradient(135deg, #4cd964, #5de870);
+    }
+
+    .product-badge.sale {
+        background: linear-gradient(135deg, #ff9500, #ffaa33);
+    }
+
+    .product-image-container {
+        height: 280px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .product-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.6s ease;
+    }
+
+    .product-card:hover .product-img {
+        transform: scale(1.1);
+    }
+
+    .product-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+        padding: 30px 20px 20px;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .product-card:hover .product-overlay {
+        opacity: 1;
+    }
+
+    .product-info {
+        padding: 25px;
+    }
+
+    .product-title {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #333;
+        margin-bottom: 10px;
+        line-height: 1.4;
+    }
+
+    .product-category {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .product-price {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 20px;
+    }
+
+    .current-price {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #005eb8;
+    }
+
+    .original-price {
+        font-size: 1.1rem;
+        color: #999;
+        text-decoration: line-through;
+    }
+
+    .discount-badge {
+        background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        color: white;
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .product-rating {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-bottom: 20px;
+    }
+
+    .stars {
+        color: #ffd700;
+        font-size: 1rem;
+    }
+
+    .rating-count {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .product-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 20px 0;
+    }
+
+    .product-features li {
+        color: #666;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .product-features li i {
+        color: #20ade9;
+        font-size: 0.8rem;
+    }
+
+    .product-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .btn-order {
+        background: linear-gradient(135deg, #005eb8, #20ade9);
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        text-decoration: none;
+        text-align: center;
+    }
+
+    .btn-order:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 94, 184, 0.3);
+        background: linear-gradient(135deg, #004a99, #1a9cd8);
+        color: white;
+        text-decoration: none;
+    }
+
+    .btn-view {
+        background: white;
+        color: #005eb8;
+        border: 2px solid #e0e0e0;
+        padding: 12px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-view:hover {
+        border-color: #20ade9;
+        color: #20ade9;
+        transform: translateY(-2px);
+    }
+
+    .btn-favorite {
+        grid-column: span 2;
+        background: #f8f9fa;
+        color: #666;
+        border: 2px solid #e0e0e0;
+        padding: 10px;
+        border-radius: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .btn-favorite:hover {
+        background: #fff5f5;
+        color: #ff6b6b;
+        border-color: #ff6b6b;
+    }
+
+    /* Quick View Modal */
+    .quick-view-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 1000;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .quick-view-modal.active {
+        display: flex;
+        opacity: 1;
+    }
+
+    .modal-content {
+        background: white;
+        border-radius: 25px;
+        width: 90%;
+        max-width: 900px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+        animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    @keyframes modalSlideIn {
+        from {
+            opacity: 0;
+            transform: translateY(-50px) scale(0.9);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    }
+
+    .close-modal {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: white;
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: #333;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        z-index: 2;
+        transition: all 0.3s ease;
+    }
+
+    .close-modal:hover {
+        background: #005eb8;
+        color: white;
+        transform: rotate(90deg);
+    }
+
+    /* Empty State */
+    .empty-state {
+        text-align: center;
+        padding: 80px 20px;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        margin: 40px 0;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        color: #e0e0e0;
+        margin-bottom: 20px;
+    }
+
+    .empty-state h3 {
+        color: #666;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    .empty-state p {
+        color: #999;
+        max-width: 500px;
+        margin: 0 auto 25px;
+        line-height: 1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.1rem;
+        }
+        
+        .product-image-container {
+            height: 220px;
+        }
+        
+        .product-actions {
+            grid-template-columns: 1fr;
+        }
+        
+        .btn-favorite {
+            grid-column: span 1;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="accessories-hero">
+    <div class="container">
+        <h1 class="hero-title">Premium Electronics Accessories</h1>
+        <p class="hero-subtitle">Enhance your devices with our curated collection of high-quality accessories. From protective cases to advanced charging solutions, find everything you need.</p>
+        <div class="mt-4">
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <div class="d-flex align-items-center text-white">
+                        <i class="fas fa-shipping-fast fa-2x me-3" style="color: #20ade9;"></i>
+                        <div>
+                            <h5 class="mb-0">24-Hour Delivery</h5>
+                            <small>Across Kigali</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="d-flex align-items-center text-white">
+                        <i class="fas fa-shield-alt fa-2x me-3" style="color: #20ade9;"></i>
+                        <div>
+                            <h5 class="mb-0">1-Year Warranty</h5>
+                            <small>On All Products</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <div class="d-flex align-items-center text-white">
+                        <i class="fas fa-headset fa-2x me-3" style="color: #20ade9;"></i>
+                        <div>
+                            <h5 class="mb-0">Local Support</h5>
+                            <small>In Kigali</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+
+    <!-- Category Filter -->
+    <div class="category-filter">
+        <h3><i class="fas fa-filter me-2"></i> Filter by Category</h3>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-category="all">
+                <i class="fas fa-th-large"></i> All Accessories
+            </button>
+            <button class="filter-btn" data-category="phone">
+                <i class="fas fa-mobile-alt"></i> Phone Accessories
+            </button>
+            <button class="filter-btn" data-category="laptop">
+                <i class="fas fa-laptop"></i> Laptop Accessories
+            </button>
+            <button class="filter-btn" data-category="audio">
+                <i class="fas fa-headphones"></i> Audio & Headphones
+            </button>
+            <button class="filter-btn" data-category="charging">
+                <i class="fas fa-bolt"></i> Charging Solutions
+            </button>
+            <button class="filter-btn" data-category="protection">
+                <i class="fas fa-shield-alt"></i> Protection
+            </button>
+            <button class="filter-btn" data-category="smart">
+                <i class="fas fa-wifi"></i> Smart Devices
+            </button>
+        </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="row g-4" id="productsGrid">
+        {% for product in products %}
+        <div class="col-xl-3 col-lg-4 col-md-6" data-categories="{{ product.category|default:'all' }}">
+            <div class="product-card">
+                <!-- Badge -->
+                {% if forloop.counter <= 2 %}
+                <span class="product-badge best-seller">🔥 Best Seller</span>
+                {% elif forloop.counter <= 4 %}
+                <span class="product-badge new">🆕 New Arrival</span>
+                {% elif product.price <= 15 %}
+                <span class="product-badge sale">💰 Great Value</span>
+                {% endif %}
+
+                <!-- Product Image -->
+                <div class="product-image-container">
+                    <img src="{{ product.av_image.url }}" class="product-img" alt="{{ product.av_name }}">
+                    <div class="product-overlay">
+                        <div class="d-flex justify-content-center gap-3">
+                            <button class="btn btn-light btn-sm" onclick="quickView('{{ product.id }}')">
+                                <i class="fas fa-expand"></i> Quick View
+                            </button>
+                            <button class="btn btn-light btn-sm" onclick="addToCart('{{ product.id }}')">
+                                <i class="fas fa-cart-plus"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-info">
+                    <h5 class="product-title">{{ product.av_name }}</h5>
+                    
+                    <div class="product-category">
+                        <i class="fas fa-tag"></i>
+                        <span>{{ product.category|default:"Electronics Accessory" }}</span>
+                    </div>
+
+                    <!-- Rating -->
+                    <div class="product-rating">
+                        <div class="stars">
+                            {% with ''|center:5 as range %}
+                            {% for _ in range %}
+                                {% if forloop.counter <= product.rating|default:4 %}
+                                <i class="fas fa-star"></i>
+                                {% else %}
+                                <i class="far fa-star"></i>
+                                {% endif %}
+                            {% endfor %}
+                            {% endwith %}
+                        </div>
+                        <span class="rating-count">({{ product.review_count|default:"24" }} reviews)</span>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="product-price">
+                        <span class="current-price">${{ product.price }}</span>
+                        {% if product.original_price and product.original_price > product.price %}
+                        <span class="original-price">${{ product.original_price }}</span>
+                        <span class="discount-badge">
+                            Save {{ product.discount_percent|default:"20" }}%
+                        </span>
+                        {% endif %}
+                    </div>
+
+                    <!-- Features -->
+                    <ul class="product-features">
+                        {% if product.warranty %}
+                        <li><i class="fas fa-check-circle"></i> {{ product.warranty }}-Month Warranty</li>
+                        {% endif %}
+                        <li><i class="fas fa-shipping-fast"></i> Free Kigali Delivery</li>
+                        <li><i class="fas fa-box"></i> In Stock: {{ product.stock|default:"50+" }} units</li>
+                    </ul>
+
+                    <!-- Actions - FIXED: Using simple href instead of Django URL template tag -->
+                    <div class="product-actions">
+                        <a href="/order/" class="btn-order" onclick="setProductToOrder('{{ product.id }}', '{{ product.av_name }}', '{{ product.price }}')">
+                            <i class="fas fa-shopping-cart"></i> Order Now
+                        </a>
+                        <button class="btn-view" onclick="quickView('{{ product.id }}')">
+                            <i class="fas fa-eye"></i> View Details
+                        </button>
+                        <button class="btn-favorite" onclick="toggleFavorite('{{ product.id }}')">
+                            <i class="far fa-heart"></i> Add to Wishlist
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="empty-state">
+                <i class="fas fa-box-open"></i>
+                <h3>No Accessories Available</h3>
+                <p>We're currently updating our accessories collection. New premium accessories will be available soon!</p>
+                <a href="/" class="btn btn-primary btn-lg px-5">
+                    <i class="fas fa-home me-2"></i> Return to Home
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Quick View Modal -->
+    <div class="quick-view-modal" id="quickViewModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeQuickView()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div id="modalContent">
+                <!-- Dynamic content will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Promotional Banner -->
+<div class="container my-5">
+    <div class="promotional-banner" style="
+        background: linear-gradient(135deg, #005eb8, #20ade9);
+        border-radius: 20px;
+        padding: 40px;
+        color: white;
+        text-align: center;
+    ">
+        <h3 style="font-size: 2rem; margin-bottom: 15px;">
+            <i class="fas fa-gift me-2"></i> Special Offer!
+        </h3>
+        <p style="font-size: 1.2rem; opacity: 0.9; margin-bottom: 20px;">
+            Get 15% off on all accessories when you order 3 or more items. Use code: <strong>ACCESS15</strong>
+        </p>
+        <button class="btn btn-light btn-lg px-5" onclick="scrollToProducts()">
+            <i class="fas fa-bolt me-2"></i> Shop Now
+        </button>
+    </div>
+</div>
+
+<script>
+    // Store product info for order page
+    function setProductToOrder(productId, productName, productPrice) {
+        // Store product info in localStorage to use on order page
+        const orderData = {
+            productId: productId,
+            productName: productName,
+            productPrice: productPrice,
+            timestamp: new Date().toISOString()
+        };
+        localStorage.setItem('currentOrder', JSON.stringify(orderData));
+        
+        // You could also set a cookie or use session storage
+        sessionStorage.setItem('selectedProduct', productId);
+        
+        // Show a notification
+        showNotification(`"${productName}" added to order!`, 'success');
+    }
+
+    // Filter products by category
+    document.querySelectorAll('.filter-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            const category = this.dataset.category;
+            const products = document.querySelectorAll('[data-categories]');
+            
+            products.forEach(product => {
+                if (category === 'all' || product.dataset.categories.includes(category)) {
+                    product.style.display = 'block';
+                    setTimeout(() => {
+                        product.style.opacity = '1';
+                        product.style.transform = 'translateY(0)';
+                    }, 50);
+                } else {
+                    product.style.opacity = '0';
+                    product.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        product.style.display = 'none';
+                    }, 300);
+                }
+            });
+        });
+    });
+
+    // Quick View Functionality
+    function quickView(productId) {
+        const modal = document.getElementById('quickViewModal');
+        const modalContent = document.getElementById('modalContent');
+        
+        // Find the product card
+        const productCard = document.querySelector(`[data-categories] .product-card`);
+        if (!productCard) return;
+        
+        const productTitle = productCard.querySelector('.product-title').textContent;
+        const productPrice = productCard.querySelector('.current-price').textContent;
+        const productImage = productCard.querySelector('.product-img').src;
+        const productCategory = productCard.querySelector('.product-category span').textContent;
+        
+        // Populate modal with product details
+        modalContent.innerHTML = `
+            <div class="row g-0">
+                <div class="col-lg-6">
+                    <div style="height: 400px; padding: 20px; display: flex; align-items: center; justify-content: center;">
+                        <img src="${productImage}" alt="${productTitle}" style="max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 10px;">
+                    </div>
+                </div>
+                <div class="col-lg-6 p-5">
+                    <h3 class="mb-3">${productTitle}</h3>
+                    <p class="text-muted mb-4"><i class="fas fa-tag"></i> ${productCategory}</p>
+                    <div class="mb-4">
+                        <h2 class="text-primary">${productPrice}</h2>
+                    </div>
+                    <div class="mb-4">
+                        <div class="stars mb-2">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="far fa-star text-warning"></i>
+                            <span class="ms-2">(24 reviews)</span>
+                        </div>
+                    </div>
+                    <div class="mb-4">
+                        <h5>Product Features:</h5>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i> 12-Month Warranty</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Free Kigali Delivery</li>
+                            <li><i class="fas fa-check text-success me-2"></i> In Stock: 50+ units</li>
+                            <li><i class="fas fa-check text-success me-2"></i> Premium Quality Material</li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-primary btn-lg w-100 mb-3" onclick="setProductToOrder('${productId}', '${productTitle}', '${productPrice}'); window.location.href='/order/'">
+                        <i class="fas fa-cart-plus me-2"></i> Proceed to Order
+                    </button>
+                    <button class="btn btn-outline-primary btn-lg w-100" onclick="addToCart('${productId}'); closeQuickView();">
+                        <i class="fas fa-shopping-cart me-2"></i> Add to Cart
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        modal.classList.add('active');
+    }
+
+    function closeQuickView() {
+        document.getElementById('quickViewModal').classList.remove('active');
+    }
+
+    // Add to Cart Function
+    function addToCart(productId) {
+        // Show notification
+        showNotification('Product added to cart!', 'success');
+        
+        // Update cart count
+        updateCartCount(1);
+    }
+
+    // Toggle Favorite
+    function toggleFavorite(productId) {
+        const btn = event.target.closest('.btn-favorite');
+        const icon = btn.querySelector('i');
+        
+        if (icon.classList.contains('far')) {
+            icon.className = 'fas fa-heart';
+            btn.innerHTML = '<i class="fas fa-heart"></i> Added to Wishlist';
+            btn.style.color = '#ff6b6b';
+            btn.style.borderColor = '#ff6b6b';
+            btn.style.background = '#fff5f5';
+            showNotification('Added to wishlist!', 'info');
+        } else {
+            icon.className = 'far fa-heart';
+            btn.innerHTML = '<i class="far fa-heart"></i> Add to Wishlist';
+            btn.style.color = '';
+            btn.style.borderColor = '';
+            btn.style.background = '';
+            showNotification('Removed from wishlist!', 'info');
+        }
+    }
+
+    // Notification System
+    function showNotification(message, type = 'info') {
+        const notification = document.createElement('div');
+        notification.className = `notification notification-${type}`;
+        notification.innerHTML = `
+            <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+            ${message}
+        `;
+        
+        // Add styles
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#3b82f6'};
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 10000;
+            animation: slideIn 0.3s ease;
+            display: flex;
+            align-items: center;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.style.animation = 'slideOut 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }, 3000);
+    }
+
+    // Update cart count
+    function updateCartCount(increment = 0) {
+        let cartCount = parseInt(localStorage.getItem('cartCount') || '0');
+        cartCount += increment;
+        localStorage.setItem('cartCount', cartCount);
+        
+        // Update cart badge if exists
+        const cartBadge = document.querySelector('.cart-badge');
+        if (cartBadge) {
+            cartBadge.textContent = cartCount;
+            cartBadge.style.display = cartCount > 0 ? 'flex' : 'none';
+        }
+    }
+
+    // Scroll to products
+    function scrollToProducts() {
+        document.getElementById('productsGrid').scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('quickViewModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeQuickView();
+        }
+    });
+
+    // Add CSS for notifications
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes slideOut {
+            from { transform: translateX(0); opacity: 1; }
+            to { transform: translateX(100%); opacity: 0; }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Initialize cart count on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCartCount(0);
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,197 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+    Contact Us | ELECTROGATES – {{ project_name }}
+{% endblock title %}
+
+{% block extra_css %}
+<style>
+    /* Full Background Image */
+    .contact-background {
+        background-image: url("{% static 'trading/image/Backgra.jpg' %}");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 60px 0;
+        position: relative;
+    }
+
+    /* Overlay to improve readability */
+    .contact-overlay {
+        background: rgba(0, 0, 0, 0.55);  /* dark transparent overlay */
+        padding: 60px 0;
+        border-radius: 10px;
+    }
+
+    .contact-card {
+        background: rgba(255, 255, 255, 0.92); 
+        backdrop-filter: blur(4px);
+        border-radius: 15px;
+        transition: all 0.3s ease;
+        height: 100%;
+        text-decoration: none;
+        color: inherit;
+        display: block;
+        border: 2px solid transparent;
+    }
+
+    /* Remove default link styling */
+    .contact-link {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* Phone link styles */
+    .phone-link:hover .contact-card {
+        transform: translateY(-10px);
+        background: rgba(25, 135, 84, 0.95); /* Success green */
+        border-color: var(--primary-color);
+        color: white;
+    }
+
+    .phone-link:hover .contact-card i {
+        color: white !important;
+    }
+
+    /* Email link styles */
+    .email-link:hover .contact-card {
+        transform: translateY(-10px);
+        background: rgba(13, 110, 253, 0.95); /* Primary blue */
+        border-color: #0d6efd;
+        color: white;
+    }
+
+    .email-link:hover .contact-card i {
+        color: white !important;
+    }
+
+    /* Social link styles */
+    .social-link:hover .contact-card {
+        transform: translateY(-10px);
+        background: rgba(220, 53, 69, 0.95); /* Danger red */
+        border-color: #dc3545;
+        color: white;
+    }
+
+    .social-link:hover .contact-card i {
+        color: white !important;
+    }
+
+    /* Location link styles */
+    .location-link:hover .contact-card {
+        transform: translateY(-10px);
+        background: rgba(255, 193, 7, 0.95); /* Warning yellow */
+        border-color: #ffc107;
+        color: #212529;
+    }
+
+    .location-link:hover .contact-card i {
+        color: #212529 !important;
+    }
+
+    /* Button hover effect */
+    .btn-primary-custom:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+    }
+
+    /* Make entire card clickable */
+    .contact-link .contact-card {
+        cursor: pointer;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .contact-card {
+            margin-bottom: 20px;
+        }
+        
+        .contact-link:hover .contact-card {
+            transform: translateY(-5px);
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+
+<div class="contact-background">
+    <div class="contact-overlay">
+
+        <div class="container my-5">
+
+            <!-- Heading -->
+            <h2 class="text-center fw-bold mb-5 text-white">
+                Get in Touch With Us
+            </h2>
+
+            <div class="row g-4 justify-content-center">
+
+                <!-- Phone -->
+                <a href="tel:+250780372040" class="col-md-4 contact-link phone-link">
+                    <div class="card contact-card shadow-sm border-0 p-4 text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-phone-alt fa-3x" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Phone Numbers</h5>
+                        <p class="mb-1 fs-5">+250780372040</p>
+                        <p class="fs-5">+250794027997</p>
+                        <div class="mt-3">
+                            <small class="text-muted">Click to call</small>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:globalmart@gmail.com" class="col-md-4 contact-link email-link">
+                    <div class="card contact-card shadow-sm border-0 p-4 text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-envelope fa-3x" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Email</h5>
+                        <p class="fs-5">globalmart@gmail.com</p>
+                        <div class="mt-3">
+                            <small class="text-muted">Click to email</small>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Socials -->
+                <div class="col-md-4 contact-link social-link">
+                    <div class="card contact-card shadow-sm border-0 p-4 text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-users fa-3x" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Social Media</h5>
+                        <p class="fs-5 mb-1">Facebook: globalmart</p>
+                        <p class="fs-5">LinkedIn: globalmart</p>
+                        <div class="mt-3">
+                            <small class="text-muted">Click for social links</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <a href="https://www.google.com/maps/place/Nyarugenge,+Kigali,+Rwanda" 
+                   target="_blank" 
+                   class="col-md-6 contact-link location-link">
+                    <div class="card contact-card shadow-sm border-0 p-4 text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-map-marker-alt fa-3x" style="color: var(--primary-color);"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Physical Store Location</h5>
+                        <p class="fs-5 mb-3">Nyarugenge, Kigali, Rwanda</p>
+                        <div class="btn btn-primary-custom px-4 py-2">
+                            Open in Google Maps
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock content %}

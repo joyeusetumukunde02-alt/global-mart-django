@@ -1,0 +1,144 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}GLOBALMART - Project Documentation{% endblock title %}</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    {% block extra_css %}{% endblock extra_css %}
+
+    <style>
+        :root {
+            --primary-color: #4e73df; /* Main blue accent */
+            --secondary-color: #1cc88a; /* Green for highlights */
+            --background-light: #f8f9fc;
+            --text-dark: #212529;
+            --text-light: #ffffff;
+        }
+
+        body {
+            background-color: var(--background-light);
+            color: var(--text-dark);
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Header styling */
+        .header-document {
+            background: linear-gradient(90deg, var(--primary-color), #6c63ff);
+            color: var(--text-light);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .header-document h1 span {
+            color: #fcd34d;
+        }
+
+        .header-document p {
+            margin-top: 15px;
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #f1f1f1;
+        }
+
+        /* Navbar adjustments */
+        .navbar {
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* Footer styling */
+        .footer-custom {
+            background: linear-gradient(90deg, var(--primary-color), #6c63ff);
+            color: #fff;
+            padding: 25px 0;
+            margin-top: 50px;
+        }
+
+        .footer-custom .container-xl {
+            font-size: 0.95rem;
+        }
+
+        /* Alerts styling */
+        .alert {
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        h3 {
+            color: #fcd34d;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header-document">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-transparent p-0 mb-3">
+            <div class="container-fluid justify-content-center">
+                <a class="navbar-brand fw-bold fs-4" href="/">GLOBALMART </a>
+            </div>
+        </nav>
+
+        {% block header %}
+        {% comment %} <div class="container text-center">
+
+            <!-- Dynamic Main Title -->
+            <h1 class="fs-2 fw-bold text-uppercase mb-3">
+                {% block header_title %}
+                    <span>GLOBALMART</span> Overview
+                {% endblock header_title %}
+            </h1>
+
+            <!-- Dynamic Subtitle -->
+            <p class="mt-2 fs-6">
+                {% block header_subtitle %}
+                    Welcome to the GlobalMart system documentation.
+                {% endblock header_subtitle %}
+            </p>
+
+        </div> {% endcomment %}
+        {% endblock header %}
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-document-wrapper">
+        {% if messages %}
+            <div class="messages-container mb-3">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% block content %}
+            <h1 class="text-center mt-5">Content Loading...</h1>
+        {% endblock content %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-custom text-center">
+        {% block footer %}
+        <div class="container-xl p-3">
+            &copy; 2025 GlobalMart. All rights reserved.
+        </div>
+        {% endblock footer %}
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    {% block extra_js %}{% endblock extra_js %}
+</body>
+</html>
